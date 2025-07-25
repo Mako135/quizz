@@ -79,7 +79,6 @@ export function DynamicForm<T extends z.ZodRawShape>({
 			await onSubmit(data);
 		},
 		onSuccess: () => {
-			toast.success("Form submitted successfully!");
 			onSuccess?.();
 			reset();
 		},
