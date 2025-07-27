@@ -1,5 +1,5 @@
 import { Card, CardContent, CardFooter, CardHeader } from "@/shared/ui/card";
-import { Skeleton } from "../ui/skeleton";
+import { Skeleton } from "../../ui/skeleton";
 
 export const FormLoader = () => {
 	return (

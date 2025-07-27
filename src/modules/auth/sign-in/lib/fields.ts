@@ -1,7 +1,7 @@
 export const signInFieldConfig = {
 	username: {
 		label: "Username",
-		placeholder: "shadcn",
+		placeholder: "",
 	},
 	password: {
 		label: "Password",

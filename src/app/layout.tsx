@@ -1,13 +1,11 @@
 import type { Metadata } from "next";
-import { Open_Sans } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 import type { ReactNode } from "react";
 import { Toaster } from "sonner";
 import { TanstackProviders } from "@/lib/tanstackProvider";
 
-const openSans = Open_Sans({
-	subsets: ["latin", "cyrillic"],
-});
+const inter = Inter({ subsets: ["latin", "cyrillic"] });
 
 export const metadata: Metadata = {
 	title: "Quizz App",
@@ -28,7 +26,7 @@ export default function RootLayout({
 					src="//unpkg.com/react-scan/dist/auto.global.js"
 				/>
 			</head>
-			<body className={`${openSans.className} antialiased`}>
+			<body className={`${inter.className} antialiased`}>
 				<Toaster richColors position="top-center" />
 				<TanstackProviders>{children}</TanstackProviders>
 			</body>

@@ -5,7 +5,6 @@ import { useMutation } from "@tanstack/react-query";
 import { type ReactNode, useMemo } from "react";
 import {
 	type DefaultValues,
-	type Path,
 	type Resolver,
 	type SubmitHandler,
 	useForm,
@@ -22,18 +21,10 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/shared/ui/card";
-import {
-	Form,
-	FormControl,
-	FormDescription,
-	FormField,
-	FormItem,
-	FormLabel,
-	FormMessage,
-} from "@/shared/ui/form";
-import { Input } from "@/shared/ui/input";
+import { Form } from "@/shared/ui/form";
+import { FormField } from "./form-field";
 
-interface FieldConfig {
+export interface FieldConfig {
 	label: string;
 	placeholder?: string;
 	description?: string;
@@ -113,28 +104,9 @@ export function DynamicForm<T extends z.ZodRawShape>({
 						{fieldEntries.map(([fieldName, config]) => (
 							<FormField
 								key={fieldName}
+								fieldName={fieldName}
 								control={control}
-								name={fieldName as Path<FormData>}
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel>{config.label}</FormLabel>
-										<FormControl>
-											<Input
-												type={config.type || "text"}
-												placeholder={config.placeholder}
-												value={field.value?.toString() ?? ""}
-												onChange={field.onChange}
-												onBlur={field.onBlur}
-												name={field.name}
-												ref={field.ref}
-											/>
-										</FormControl>
-										{config.description && (
-											<FormDescription>{config.description}</FormDescription>
-										)}
-										<FormMessage />
-									</FormItem>
-								)}
+								config={config}
 							/>
 						))}
 						<Button type="submit" disabled={isPending} className="w-full">

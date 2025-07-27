@@ -1,6 +1,7 @@
 "use client";
 
 import { DynamicForm } from "@/shared/components";
+import { SignInFooter } from "./components/SingInFooter";
 import { signInFieldConfig, signInFormSchema, useSignIn } from "./lib";
 
 export default function SignInPage() {
@@ -15,6 +16,7 @@ export default function SignInPage() {
 			submitText="Sign In"
 			title="Sign In"
 			description="Please enter your credentials to sign in."
+			footer={<SignInFooter />}
 		/>
 	);
 }
