@@ -10,3 +10,8 @@ export const signInFormSchema = z.object({
 });
 
 export type SignInFormI = z.infer<typeof signInFormSchema>;
+
+export type SignInResponseI = {
+	access_token: string;
+	refresh_token: string;
+};

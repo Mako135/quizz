@@ -19,6 +19,9 @@
       }
     ],
     "paths": {
+      "@shared/*": ["./src/shared/*"],
+      "@modules/*": ["./src/modules/*"],
+      "@quizzes/*": ["./src/modules/quizzes/*"],
       "@/*": ["./src/*"]
     }
   },

@@ -1,3 +1,5 @@
+import { QuizDetailPage } from "@/modules/quizzes/detail";
+
 export default function page() {
-	return <div>Wellcome to Quiz App</div>;
+	return <QuizDetailPage />;
 }

@@ -22,13 +22,13 @@ import {
 	CardTitle,
 } from "@/shared/ui/card";
 import { Form } from "@/shared/ui/form";
-import { FormField } from "./form-field";
+import { type FieldType, FormField } from "./form-field";
 
 export interface FieldConfig {
 	label: string;
 	placeholder?: string;
 	description?: string;
-	type?: "text" | "email" | "password" | "number";
+	type?: FieldType;
 }
 
 interface DynamicFormProps<T extends z.ZodRawShape> {

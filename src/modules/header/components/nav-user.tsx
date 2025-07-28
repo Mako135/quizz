@@ -1,5 +1,6 @@
 "use client";
 
+import { Skeleton } from "@shared/ui/skeleton";
 import { BadgeCheck, ChevronsUpDown, LogOut } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/shared/ui/avatar";
 import {
@@ -14,15 +15,15 @@ import {
 import { useUserData } from "../lib/api";
 
 export function NavUser() {
-	const { data } = useUserData();
+	const { data, isLoading } = useUserData();
 
-	// if (isLoading) {
-	// 	return <Skeleton className="h-8 w-32 rounded-lg" />;
-	// }
+	if (isLoading) {
+		return <Skeleton className="h-8 w-32 rounded-lg" />;
+	}
 
-	// if (!data) {
-	// 	return <div>No user data available</div>;
-	// }
+	if (!data) {
+		return <div>No user data available</div>;
+	}
 
 	return (
 		<DropdownMenu>

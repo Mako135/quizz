@@ -3,8 +3,7 @@ import { Search } from "./Search";
 
 export const Filter = () => {
 	return (
-		<div>
-			<h2 className="text-lg font-semibold mb-4">Filter Quizzes</h2>
+		<div className="my-10">
 			<Search />
 			<FilterTag />
 		</div>

@@ -1,22 +1,22 @@
+import type { SignInResponseI } from "@modules/auth/sign-in/lib";
 import axios from "axios";
 import Cookies from "js-cookie";
 import type { NextRequest } from "next/server";
-import { coreClient } from "./api";
+import { CORE_API, coreClient } from "./api";
 
-export type RefreshTokenI = {
-	access_token: string;
-};
-
-export const refreshToken = async (): Promise<RefreshTokenI> => {
+export const refreshToken = async (): Promise<SignInResponseI> => {
 	try {
+		const refreshToken = Cookies.get("refreshToken");
 		const response = await axios.post(
-			`${process.env.NEXT_PUBLIC_API_URL}auth/jwt/refresh/`,
-			undefined,
-			{ withCredentials: true },
+			`${CORE_API}auth/refresh/`,
+			{ refresh_token: refreshToken },
+			{
+				withCredentials: true,
+			},
 		);
-		const { access_token } = response.data as RefreshTokenI;
-		setTokens(access_token);
-		return { access_token };
+		const { access_token, refresh_token } = response.data as SignInResponseI;
+		setTokens(access_token, refresh_token);
+		return { access_token, refresh_token };
 	} catch (error) {
 		Cookies.remove("accessToken", { path: "/" });
 		await coreClient.post("auth/logout");
@@ -25,7 +25,11 @@ export const refreshToken = async (): Promise<RefreshTokenI> => {
 	}
 };
 
-export const setTokens = (access_token: string, req?: NextRequest) => {
+export const setTokens = (
+	access_token: string,
+	refresh_token: string,
+	req?: NextRequest,
+) => {
 	// Проверка на валидность токена
 	if (!access_token || access_token.trim() === "") {
 		return;
@@ -34,6 +38,11 @@ export const setTokens = (access_token: string, req?: NextRequest) => {
 	// Установка cookies с флагами безопасности
 	Cookies.set("accessToken", access_token, {
 		expires: 1 / 24,
+		sameSite: "strict",
+	});
+
+	Cookies.set("refreshToken", refresh_token, {
+		expires: 30,
 		sameSite: "strict",
 	});
 

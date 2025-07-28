@@ -7,7 +7,17 @@ export const Header = () => {
 			<Link href="/" className="text-2xl font-bold">
 				Quizz App
 			</Link>
-			<NavUser />
+			<div className="flex items-center gap-6">
+				<div className="flex gap-4">
+					<Link href="/" className="hover:underline">
+						Quizzes
+					</Link>
+					<Link href="/create" className="hover:underline">
+						Create Quiz
+					</Link>
+				</div>
+				<NavUser />
+			</div>
 		</div>
 	);
 };

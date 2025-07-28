@@ -1,4 +1,4 @@
-import { Filter } from "./components/Filter";
+import { Filter } from "./components/filter/Filter";
 import { QuizCard } from "./components/QuizCard";
 
 export const AllQuizzes = () => {

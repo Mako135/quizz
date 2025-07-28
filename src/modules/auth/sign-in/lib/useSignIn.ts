@@ -1,17 +1,15 @@
+import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import type { SignInFormI } from "./types";
 
 export const useSignIn = () => {
-	const onSubmit = async (data: SignInFormI) => {
-		console.log("Form submitted:", data);
-	};
+	const router = useRouter();
 
 	const onSuccess = () => {
 		toast.success("Sign in successful!");
+		router.push("/");
 	};
 
 	return {
-		onSubmit,
 		onSuccess,
 	};
 };

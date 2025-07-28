@@ -3,15 +3,17 @@
 import { DynamicForm } from "@/shared/components";
 import { SignUpFooter } from "./components/SignUpFooter";
 import { signUpFieldConfig, signUpFormSchema, useSignUp } from "./lib";
+import { SignUp } from "./lib/api";
 
 export default function SignUpPage() {
-	const { onSubmit, onSuccess } = useSignUp();
+	const { onSuccess } = useSignUp();
+
 	return (
 		<DynamicForm
 			schema={signUpFormSchema}
 			onSuccess={onSuccess}
 			fields={signUpFieldConfig}
-			onSubmit={onSubmit}
+			onSubmit={SignUp}
 			submitText="Sign Up"
 			title="Sign Up"
 			description="Please enter your credentials to sign up."
