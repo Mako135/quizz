@@ -10,12 +10,27 @@ export type OptionI = z.infer<typeof OptionSchema>;
 const QuestionSchema = z.object({
 	text: z.string().min(2).max(100),
 	type: z.enum(["text", "single", "multiple"]),
-	point: z.number().min(1).optional().or(z.literal("")),
+	point: z.union([
+		z.string().min(1, "Points must be at least 1"),
+		z.number().min(1, "Points must be at least 1"),
+	]),
 	correct_text_answer: z.string().optional().or(z.literal("")),
 	options: z.array(OptionSchema),
 });
 
 export type Question = z.infer<typeof QuestionSchema>;
+
+export type QuestionApiResponse = {
+	id: number;
+	text: string;
+	type: "text" | "single" | "multiple";
+	point: number;
+	correct_text_answer?: string;
+	options: {
+		id: number;
+		text: string;
+	}[];
+};
 
 export const QuizFormSchema = z.object({
 	name: z.string().min(2).max(100),

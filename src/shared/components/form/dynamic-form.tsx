@@ -90,12 +90,12 @@ export function DynamicForm<T extends z.ZodRawShape>({
 	const fieldEntries = useMemo(() => Object.entries(fields), [fields]);
 
 	return (
-		<Card className="max-w-96 mx-auto py-6 w-full">
-			<CardHeader>
-				<CardTitle>{title}</CardTitle>
+		<Card className="max-w-96 mx-auto py-6 w-full px-0 border-none shadow-none sm:border sm:px-6 sm:shadow-sm">
+			<CardHeader className="px-0 sm:px-6">
+				<CardTitle className="text-xl">{title}</CardTitle>
 				{description && <CardDescription>{description}</CardDescription>}
 			</CardHeader>
-			<CardContent>
+			<CardContent className="px-0 sm:px-6">
 				<Form {...methods}>
 					<form
 						onSubmit={handleSubmit(mutationFn)}

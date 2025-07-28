@@ -3,6 +3,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useFieldArray, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { apiRequest } from "@/lib/api";
+import { queryClient } from "@/lib/queryClient";
 import { QuizFormSchema, type QuizFormValues } from "./types";
 
 export const useQuizCreate = () => {
@@ -16,15 +17,7 @@ export const useQuizCreate = () => {
 		},
 	});
 
-	const {
-		register,
-		control,
-		handleSubmit,
-		setValue,
-		formState: { errors },
-	} = methods;
-
-	console.log("errors", errors);
+	const { register, control, handleSubmit, setValue } = methods;
 
 	const { fields, append, remove } = useFieldArray({
 		control,
@@ -33,7 +26,18 @@ export const useQuizCreate = () => {
 
 	const { mutateAsync } = useMutation({
 		mutationFn: async (data: QuizFormValues) => {
-			return await apiRequest("post", "/quizzes", data, "auth");
+			const finalData = {
+				...data,
+				tags: [data.tags],
+			};
+			return await apiRequest("post", "/quizzes", finalData);
+		},
+		onSuccess: () => {
+			toast.success("Quiz created successfully!");
+			queryClient.invalidateQueries({
+				queryKey: ["quizzes"],
+			});
+			methods.reset();
 		},
 		onError: (error) => {
 			toast.error(`Error creating quiz: ${error.message}`);
@@ -42,8 +46,6 @@ export const useQuizCreate = () => {
 
 	const onSubmit = async (data: QuizFormValues) => {
 		await mutateAsync(data);
-		toast.success("Quiz created successfully!");
-		methods.reset();
 	};
 
 	return {

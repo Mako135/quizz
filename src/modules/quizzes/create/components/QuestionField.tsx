@@ -76,11 +76,11 @@ const SingleQuestion = memo(
 
 					<FormField
 						fieldName={`questions.${index}.point`}
-						type="number"
 						control={control}
 						config={{
 							label: "Points",
 							placeholder: "Enter points",
+							type: "number",
 						}}
 					/>
 				</div>

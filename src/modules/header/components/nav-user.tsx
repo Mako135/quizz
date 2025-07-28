@@ -1,18 +1,18 @@
 "use client";
 
 import { Skeleton } from "@shared/ui/skeleton";
-import { BadgeCheck, ChevronsUpDown, LogOut } from "lucide-react";
+import { ChevronsUpDown, LogOut } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/shared/ui/avatar";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
-	DropdownMenuGroup,
 	DropdownMenuItem,
 	DropdownMenuLabel,
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from "@/shared/ui/dropdown-menu";
 import { useUserData } from "../lib/api";
+import { logout } from "../lib/utils";
 
 export function NavUser() {
 	const { data, isLoading } = useUserData();
@@ -61,14 +61,7 @@ export function NavUser() {
 				</DropdownMenuLabel>
 				<DropdownMenuSeparator />
 
-				<DropdownMenuGroup>
-					<DropdownMenuItem>
-						<BadgeCheck />
-						Account
-					</DropdownMenuItem>
-				</DropdownMenuGroup>
-				<DropdownMenuSeparator />
-				<DropdownMenuItem>
+				<DropdownMenuItem onClick={logout}>
 					<LogOut />
 					Log out
 				</DropdownMenuItem>

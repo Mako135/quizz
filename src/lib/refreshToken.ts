@@ -1,4 +1,5 @@
 import type { SignInResponseI } from "@modules/auth/sign-in/lib";
+import { logout } from "@modules/header/lib/utils";
 import axios from "axios";
 import Cookies from "js-cookie";
 import type { NextRequest } from "next/server";
@@ -8,7 +9,7 @@ export const refreshToken = async (): Promise<SignInResponseI> => {
 	try {
 		const refreshToken = Cookies.get("refreshToken");
 		const response = await axios.post(
-			`${CORE_API}auth/refresh/`,
+			`${CORE_API}auth/refresh?refresh_token=${refreshToken}`,
 			{ refresh_token: refreshToken },
 			{
 				withCredentials: true,
@@ -18,9 +19,7 @@ export const refreshToken = async (): Promise<SignInResponseI> => {
 		setTokens(access_token, refresh_token);
 		return { access_token, refresh_token };
 	} catch (error) {
-		Cookies.remove("accessToken", { path: "/" });
-		await coreClient.post("auth/logout");
-		window.location.href = "/auth/sign-in";
+		logout();
 		throw error;
 	}
 };
