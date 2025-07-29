@@ -3,7 +3,16 @@ import { NextResponse } from "next/server";
 
 export async function GET(req: Request) {
 	try {
-		const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}quizzes/`, {
+		// Извлекаем query параметры из URL запроса
+		const url = new URL(req.url);
+		const queryParams = url.searchParams.toString();
+
+		// Формируем URL с query параметрами
+		const apiUrl = queryParams
+			? `${process.env.NEXT_PUBLIC_API_URL}quizzes/?${queryParams}`
+			: `${process.env.NEXT_PUBLIC_API_URL}quizzes/`;
+
+		const res = await axios.get(apiUrl, {
 			headers: {
 				"Content-Type": "application/json",
 				Authorization: req.headers.get("Authorization") || "",
