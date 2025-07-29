@@ -18,7 +18,7 @@ export const useQuizOverview = (quizId: string) => {
 	const resetQuiz = useQuizStore((state) => state.resetQuiz);
 
 	const startQuiz = async (quizId: string) => {
-		await apiRequest("post", `quizzes/${quizId}/start`);
+		await apiRequest("post", `/api/quizzes/${quizId}/start`);
 		resetQuiz();
 		setQuizStarted();
 	};

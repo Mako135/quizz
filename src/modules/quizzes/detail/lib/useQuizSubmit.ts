@@ -77,7 +77,7 @@ export const useQuizSubmit = ({ quizId, quiz }: QuizProps) => {
 		if (currentStep === total - 1) {
 			const score = await apiRequest<number>(
 				"post",
-				`quizzes/${quizId}/submit`,
+				`/api/quizzes/${quizId}/submit`,
 				{
 					answers: formatAnswersForSubmit(),
 				},
