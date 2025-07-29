@@ -50,7 +50,7 @@ export const QuizDetailPage = ({ quizId }: { quizId: string }) => {
 			{quizStarted && <Quiz quiz={data} quizId={quizId} />}
 
 			{(score || score === 0) && (
-				<div className="flex flex-col items-center justify-center h-dvh">
+				<div className="flex flex-col items-center justify-center h-80">
 					<h2 className="text-2xl font-bold">Your Score: {score.toFixed(2)}</h2>
 					<p className="text-lg">Thank you for participating!</p>
 					<RateQuiz />
@@ -68,13 +68,17 @@ export const QuizDetailPage = ({ quizId }: { quizId: string }) => {
 					</div>
 				</div>
 			)}
-			{!quizStarted && quizResults && quizResults.items.length > 0 && (
-				<TopList
-					isLoading={isLoadingResults}
-					error={errorResults}
-					data={quizResults.items}
-				/>
-			)}
+
+			{!quizStarted &&
+				!score &&
+				quizResults &&
+				quizResults.items.length > 0 && (
+					<TopList
+						isLoading={isLoadingResults}
+						error={errorResults}
+						data={quizResults.items}
+					/>
+				)}
 		</div>
 	);
 };
