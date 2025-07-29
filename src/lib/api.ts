@@ -21,8 +21,11 @@ export const createApiClient = (): AxiosInstance => {
 
 			let token = Cookies.get("accessToken");
 
+			console.log("Current token:", token);
+
 			if (!token) {
 				token = (await refreshToken()).access_token;
+				console.log("Token refreshed:", token);
 			}
 
 			config.headers.Authorization = `Bearer ${token}`;
@@ -70,6 +73,22 @@ export const apiRequest = async <T>(
 	client: "auth" | "core" = "core",
 ): Promise<T> => {
 	try {
+		console.log(url.startsWith("/api/"));
+		if (url.startsWith("/api/")) {
+			const res = await fetch(url, {
+				method: method.toUpperCase(),
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: `Bearer ${Cookies.get("accessToken") || ""}`,
+				},
+				credentials: "include",
+				body: data ? JSON.stringify(data) : undefined,
+			});
+			if (!res.ok) throw new Error(`HTTP ${res.status}`);
+			return (await res.json()) as T;
+		}
+
+		// Иначе дергаем внешний backend напрямую
 		const response = await (client === "auth" ? authClient : coreClient)[
 			method
 		](url, data ?? undefined);

@@ -21,7 +21,7 @@ export const useFilterTag = () => {
 			data?.items
 				.map((tag) => ({
 					tag,
-					checked: tagsSet.has(tag.id),
+					checked: tagsSet.has(tag.name),
 				}))
 				.sort((a, b) => {
 					if (a.checked && !b.checked) return -1;
@@ -33,10 +33,10 @@ export const useFilterTag = () => {
 
 	const onChange = useCallback(
 		(tag: TagI) => {
-			if (tags.includes(tag.id)) {
-				removeTag(tag.id);
+			if (tags.includes(tag.name)) {
+				removeTag(tag.name);
 			} else {
-				addTag(tag.id);
+				addTag(tag.name);
 			}
 		},
 		[tags, addTag, removeTag],

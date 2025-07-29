@@ -19,7 +19,9 @@ export const QuizList = () => {
 		<div className="mt-6 grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
 			{isLoading && <QuizCardSkeleton />}
 			{!isLoading &&
-				quizList.map((quiz) => <QuizCard key={quiz.id} quiz={quiz} />)}
+				quizList.map((quiz, idx) => (
+					<QuizCard key={quiz.created_at + JSON.stringify(idx)} quiz={quiz} />
+				))}
 		</div>
 	);
 };

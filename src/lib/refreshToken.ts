@@ -1,23 +1,29 @@
-import type { SignInResponseI } from "@modules/auth/sign-in/lib";
 import { logout } from "@modules/header/lib/utils";
 import axios from "axios";
 import Cookies from "js-cookie";
 import type { NextRequest } from "next/server";
 import { CORE_API, coreClient } from "./api";
 
-export const refreshToken = async (): Promise<SignInResponseI> => {
+type RefreshTokenResponseI = {
+	access_token: string;
+};
+
+export const refreshToken = async (): Promise<RefreshTokenResponseI> => {
 	try {
 		const refreshToken = Cookies.get("refreshToken");
 		const response = await axios.post(
-			`${CORE_API}auth/refresh?refresh_token=${refreshToken}`,
-			{ refresh_token: refreshToken },
+			`${CORE_API}auth/refresh`,
+			{},
 			{
-				withCredentials: true,
+				headers: {
+					Cookie: `refresh_token=${refreshToken}`,
+				},
 			},
 		);
-		const { access_token, refresh_token } = response.data as SignInResponseI;
-		setTokens(access_token, refresh_token);
-		return { access_token, refresh_token };
+		
+		const { access_token } = response.data as RefreshTokenResponseI;
+		setTokens(access_token);
+		return { access_token };
 	} catch (error) {
 		logout();
 		throw error;
@@ -26,7 +32,7 @@ export const refreshToken = async (): Promise<SignInResponseI> => {
 
 export const setTokens = (
 	access_token: string,
-	refresh_token: string,
+	refresh_token?: string,
 	req?: NextRequest,
 ) => {
 	// Проверка на валидность токена
@@ -40,10 +46,12 @@ export const setTokens = (
 		sameSite: "strict",
 	});
 
-	Cookies.set("refreshToken", refresh_token, {
-		expires: 30,
-		sameSite: "strict",
-	});
+	if (refresh_token) {
+		Cookies.set("refreshToken", refresh_token, {
+			expires: 7,
+			sameSite: "strict",
+		});
+	}
 
 	coreClient.defaults.headers.common.Authorization = `Bearer ${access_token}`;
 

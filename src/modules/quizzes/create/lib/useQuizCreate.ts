@@ -30,7 +30,7 @@ export const useQuizCreate = () => {
 				...data,
 				tags: [data.tags],
 			};
-			return await apiRequest("post", "/quizzes", finalData);
+			return await apiRequest("post", "/api/quizzes", finalData);
 		},
 		onSuccess: () => {
 			toast.success("Quiz created successfully!");

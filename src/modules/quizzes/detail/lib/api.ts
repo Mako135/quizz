@@ -4,7 +4,7 @@ import type { ApiResponse } from "@/lib/types";
 import type { QuizDetail, QuizRateI } from "./types";
 
 export const getQuizByID = async (id: string) => {
-	return apiRequest<QuizDetail>("get", `/quizzes/${id}`);
+	return apiRequest<QuizDetail>("get", `/api/quizzes/${id}`);
 };
 
 export const useQuizDetail = (id: string) => {
@@ -15,10 +15,7 @@ export const useQuizDetail = (id: string) => {
 };
 
 const getQuizResults = async (id: string) => {
-	return apiRequest<ApiResponse<QuizRateI>>(
-		"get",
-		`/quizzes/${id}/result-list`,
-	);
+	return apiRequest<ApiResponse<QuizRateI>>("get", `/api/quizzes/${id}/result`);
 };
 
 export const useQuizResults = (id: string) => {
@@ -29,5 +26,5 @@ export const useQuizResults = (id: string) => {
 };
 
 export const rateQuiz = async (quizId: string, data: { rating: number }) => {
-	return apiRequest("post", `/quizzes/${quizId}/rate`, { body: data });
+	return apiRequest("post", `/api/quizzes/${quizId}/rate`, { body: data });
 };

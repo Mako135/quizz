@@ -24,11 +24,13 @@ const getQuizzes = (query: getQuizzesQuery) => {
 	}
 
 	if (query.tag_list && query.tag_list.length > 0) {
-		params.append("tag_list", query.tag_list.join(","));
+		query.tag_list.forEach((tag) => {
+			params.append("tag_list", tag);
+		});
 	}
 
 	const queryString = params.toString();
-	const url = queryString ? `/quizzes?${queryString}` : "/quizzes";
+	const url = queryString ? `/api/quizzes?${queryString}` : "/api/quizzes";
 
 	return apiRequest<ApiResponse<QuizI>>("get", url);
 };
@@ -41,7 +43,7 @@ export const useQuizzes = (query: getQuizzesQuery) => {
 };
 
 const getTags = () => {
-	return apiRequest<ApiResponse<TagI>>("get", "/quizzes/tags");
+	return apiRequest<ApiResponse<TagI>>("get", "/api/quizzes/tags");
 };
 
 export const useTags = () => {

@@ -3,7 +3,6 @@ import { useParams } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { rateQuiz } from "../lib/api";
 import { RateFormSchema, type RateFormValues } from "./types";
 
 export const useQuizRate = (setOpen: (open: boolean) => void) => {
@@ -21,11 +20,9 @@ export const useQuizRate = (setOpen: (open: boolean) => void) => {
 			toast.error("Quiz ID is missing.");
 			return;
 		}
-		await rateQuiz(quizId as string, values);
 		toast.success("Thank you for your feedback!", {
 			description: `You rated this quiz ${values.rating} out of 5 stars.`,
 		});
-		console.log(values);
 		setOpen(false);
 		form.reset();
 	}

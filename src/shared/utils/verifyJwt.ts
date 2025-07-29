@@ -16,10 +16,8 @@ export async function verifyJwt(
 		return { isValid: false, isAdmin: false };
 	}
 	try {
-		// Импортируем публичный ключ
 		const publicKey = await importSPKI(PUBLIC_KEY, "RS256");
 
-		// Верифицируем JWT токен
 		const { payload } = await jwtVerify(token, publicKey, {
 			algorithms: ["RS256"],
 		});

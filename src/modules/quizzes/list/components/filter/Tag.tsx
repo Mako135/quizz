@@ -11,13 +11,13 @@ export const Tag = ({ tag, onChange, checked }: Props) => {
 	return (
 		<label
 			key={tag.id}
-			htmlFor={tag.id.toString()}
+			htmlFor={tag.name.toString()}
 			className="cursor-pointer"
 		>
 			<input
 				type="checkbox"
 				className="peer hidden"
-				id={tag.id.toString()}
+				id={tag.name.toString()}
 				checked={checked}
 				onChange={onChange}
 			/>

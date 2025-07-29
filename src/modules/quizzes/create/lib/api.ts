@@ -4,12 +4,7 @@ import type { ApiResponse } from "@/lib/types";
 import type { TagI } from "./types";
 
 const getTags = async () => {
-	return await apiRequest<ApiResponse<TagI>>(
-		"get",
-		"/quizzes/tags",
-		undefined,
-		"auth",
-	);
+	return await apiRequest<ApiResponse<TagI>>("get", "/api/quizzes/tags");
 };
 
 export const useTags = () => {

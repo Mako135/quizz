@@ -8,5 +8,5 @@ export const SignUp = async (data: SignUpFormI) => {
 		password: data.password,
 	};
 
-	await apiRequest<void>("post", "/auth/register/", finalData, "auth");
+	await apiRequest<void>("post", "/api/auth/sign-up/", finalData);
 };
