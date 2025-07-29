@@ -2,15 +2,11 @@ import axios from "axios";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
-	// Получаем JSON данные вместо FormData
 	const { username, password } = await req.json();
 
-	// Создаем FormData для отправки на внешний API
 	const body = new FormData();
 	body.append("username", username);
 	body.append("password", password);
-
-	console.log("Sign-in request body:", req.json());
 
 	try {
 		const res = await axios.post(
@@ -18,7 +14,6 @@ export async function POST(req: Request) {
 			body,
 			{
 				headers: {
-					// Не устанавливаем Content-Type - axios сделает это автоматически для FormData
 					Authorization: req.headers.get("Authorization") || "",
 				},
 			},

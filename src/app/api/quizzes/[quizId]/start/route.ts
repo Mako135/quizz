@@ -3,13 +3,12 @@ import { NextResponse } from "next/server";
 import type { QuizParams } from "../result/route";
 
 export async function POST(req: Request, { params }: QuizParams) {
-	const body = await req.json();
 	const { quizId } = await params;
 
 	try {
 		const res = await axios.post(
 			`${process.env.NEXT_PUBLIC_API_URL}quizzes/${quizId}/start/`,
-			body,
+			{},
 			{
 				headers: {
 					"Content-Type": "application/json",
